@@ -1,515 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ইসলামিষ্ট ক্যালকুলেটর</title>
-  <!-- React CDN -->
-  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-  <!-- Babel for JSX -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- html2canvas library for screenshot functionality -->
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইসলামিষ্ট ক্যালকুলেটর</title>
+    <!-- React CDN -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas library for screenshot functionality -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link href="https://fonts.maateen.me/charukola-ultra-light/font.css" rel="stylesheet">
+    <meta property="og:title" content="ইসলামিষ্ট ক্যালকুলেটর" />
+    <meta property="og:description"
+        content="ইসলামিক রাজনৈতিক ও সামাজিক চিন্তাধারার স্পেকট্রামে আপনি কোথায় আছেন তা জানুন।" />
+    <meta property="og:image"
+        content="https://raw.githubusercontent.com/Ummah-Labs/Islamist-Calculator/refs/heads/main/islamist.png" />
+    <meta property="og:url" content="https://islamist.minbars.net" />
+    <meta property="og:type" content="website" />
+    <style>
+        body {
+            font-family: 'Charukola Ultra Light', sans-serif;
+        }
 
-  <link href="https://fonts.maateen.me/charukola-ultra-light/font.css" rel="stylesheet">
+        /* Add some additional CSS to ensure styles are captured correctly */
+        .result-container {
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+        }
 
-  <meta property="og:title" content="ইসলামিষ্ট ক্যালকুলেটর" />
-<meta property="og:description" content="ইসলামিক রাজনৈতিক ও সামাজিক চিন্তাধারার স্পেকট্রামে আপনি কোথায় আছেন তা জানুন।" />
-<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/The_Kaaba_during_Hajj.jpg/275px-The_Kaaba_during_Hajj.jpg" />
-<meta property="og:url" content="https://islamist.minbars.net" />
-<meta property="og:type" content="website" />
+        .ideology-box {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
 
-  <style>
-    
-    body {
-        font-family: 'Charukola Ultra Light', sans-serif;
-    }
-    /* Add some additional CSS to ensure styles are captured correctly */
-    .result-container {
-      background-color: #f3f4f6;
-      border-radius: 0.5rem;
-      box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-      padding: 1.5rem;
-    }
-    .ideology-box {
-      background-color: white;
-      border-radius: 0.5rem;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .progress-bar-bg {
-      background-color: #d1d5db;
-      border-radius: 9999px;
-      height: 1.5rem;
-      overflow: hidden;
-    }
-    .islamist-bar {
-      background-color: #000000;
-      height: 1.5rem;
-      transition-property: all;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: 150ms;
-    }
-    .moderate-bar {
-      background-color: #f97316;
-      height: 1.5rem;
-      transition-property: all;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: 150ms;
-    }
-    .branding {
-      text-align: center;
-      margin-top: 2rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid #e5e7eb;
-      font-weight: 500;
-      color: #4b5563;
-    }
-    .branding a {
-      color: #f97316;
-      font-weight: 600;
-      text-decoration: none;
-    }
-  </style>
+        .progress-bar-bg {
+            background-color: #d1d5db;
+            border-radius: 9999px;
+            height: 1.5rem;
+            overflow: hidden;
+        }
+
+        .islamist-bar {
+            background-color: #000000;
+            height: 1.5rem;
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        .moderate-bar {
+            background-color: #f97316;
+            height: 1.5rem;
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        .branding {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e5e7eb;
+            font-weight: 500;
+            color: #4b5563;
+        }
+
+        .branding a {
+            color: #f97316;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
 </head>
+
 <body class="bg-gray-100">
-  <div id="root" class="container mx-auto py-8"></div>
+    <div id="root" class="container mx-auto py-8"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+        const questions = [
+            // Governance & Law
+            {
+                text: "শরিয়া আইনের পরিবর্তে দেশ কি সেক্যুলার আইন দ্বারা শাসিত হওয়া উচিত বলে মনে করেন?",
+                islamistAnswer: "no" // "no" means Islamist position is against secular law
+            },
+            {
+                text: "গণতন্ত্র কি ইসলামের সাথে সামঞ্জস্যপূর্ণ?",
+                islamistAnswer: "no" // Islamists often believe democracy is un-Islamic
+            },
+            {
+                text: "মুসলিমদের কি বিশ্বব্যাপী খিলাফত প্রতিষ্ঠাকে অগ্রাধিকার দেওয়া উচিত?",
+                islamistAnswer: "yes" // Islamists support global caliphate
+            },
+            {
+                text: "আপনি কি মনে করেন ধর্ম এবং রাষ্ট্র আলাদা বিষয় এবং একটির সাথে আরেকটি মেলানো উচিৎ নয়?",
+                islamistAnswer: "no" // Islamists support religious authority over legislation
+            },
 
-    const questions = [
-      // Governance & Law
-      {
-        text: "শরিয়া আইনের পরিবর্তে দেশ কি সেক্যুলার আইন দ্বারা শাসিত হওয়া উচিত বলে মনে করেন?",
-        islamistAnswer: "no" // "no" means Islamist position is against secular law
-      },
-      {
-        text: "গণতন্ত্র কি ইসলামের সাথে সামঞ্জস্যপূর্ণ?",
-        islamistAnswer: "no" // Islamists often believe democracy is un-Islamic
-      },
-      {
-        text: "মুসলিমদের কি বিশ্বব্যাপী খিলাফত প্রতিষ্ঠাকে অগ্রাধিকার দেওয়া উচিত?",
-        islamistAnswer: "yes" // Islamists support global caliphate
-      },
-      {
-        text: "আপনি কি মনে করেন ধর্ম এবং রাষ্ট্র আলাদা বিষয় এবং একটির সাথে আরেকটি মেলানো উচিৎ নয়?",
-        islamistAnswer: "no" // Islamists support religious authority over legislation
-      },
-      
-      // Rights & Freedoms
-      {
-        text: "আপনি কি মনে করেন মুসলিম রাষ্ট্রে বসবাস করতে চাইলে সামর্থবান অমুসলিমদের জিযিয়াকর দিতে হবে?",
-        islamistAnswer: "yes" // Islamists often support different legal status for non-Muslims
-      },
-      {
-        text: "আইনি শাস্তি ছাড়া যেকারও ইসলাম ত্যাগ করার (মুরতাদ) স্বাধীনতা থাকা উচিত?",
-        islamistAnswer: "no" // Islamists often support punishments for apostasy
-      },
-      {
-        text: "ইসলাম ও রাসূল সাল্লাল্লাহু আলাইহি ওয়াসাল্লামের কটুক্তিকে বাক-স্বাধীনতা মনে করেন?",
-        islamistAnswer: "no" // Islamists often limit speech that criticizes Islam
-      },
-      {
-        text: "নারী ও পুরুষের কি জীবনের সব দিক থেকে সমান অধিকার থাকা উচিত? এমনকি সম্পদ বন্টন ও বিয়ের সংখ্যার ক্ষেত্রেও?",
-        islamistAnswer: "no" // Islamists often support different roles and rights
-      },
-      
-      // Social Issues
-      {
-        text: "মুসলিমদের কি পাশ্চাত্য সমাজে সম্পূর্ণরূপে একীভূত হওয়া উচিত?",
-        islamistAnswer: "no" // Islamists often oppose full integration
-      },
-      {
-        text: "মিউজিক, গান-বাজনা, বাদ্যযন্ত্র কি ইসলামে অনুমোদিত?",
-        islamistAnswer: "no" // Strict Islamists often oppose many forms of entertainment
-      },
-      {
-        text: "প্রচলিত ব্যাংকিং ব্যবস্থার বিকল্প হিসেবে ইসলামি ব্যাংকিং এর প্রচলন করা উচিত?",
-        islamistAnswer: "yes" // Islamists support Islamic banking
-      },
-      {
-        text: "মুসলিম দেশগুলোতে নারীদের কি আইন অনুসারে শালীন পোষাক পরা আবশ্যক করা উচিত?",
-        islamistAnswer: "yes" // Islamists often support mandatory hijab
-      },
-      
-      // Contemporary Politics
-      {
-        text: "তালিবানের আফগানিস্তান শাসন কি একটি বৈধ ইসলামি রাষ্ট্র?",
-        islamistAnswer: "yes" // Islamists more likely to view Taliban as legitimate
-      },
-      {
-        text: "আপনি কি বিশ্বাস করেন যে ফিলিস্তিনিদের ইসরাইলের বিরুদ্ধে সশস্ত্র প্রতিরোধের অধিকার আছে?",
-        islamistAnswer: "yes" // Islamists typically support armed resistance against Israel
-      },
-      {
-        text: "পাশ্চাত্য দেশগুলি বিশেষত অ্যামেরিকা কি ইসলামের সাথে যুদ্ধে রয়েছে?",
-        islamistAnswer: "yes" // Islamists often view West as at war with Islam
-      },
-      {
-        text: "বিশেষ কারণ ব্যতীত অমুসলিম দেশে স্থায়ীভাবে বসবাস করাকে হারাম মনে করেন?",
-        islamistAnswer: "yes" // Islamists support prioritizing Islamic law
-      },
-      
-      // Historical & Theological
-      {
-        text: "আপনি কি মনে করেন ইসলামি শাসন প্রতিষ্ঠার জন্য বর্তমানে জিহাদে কৌশলগত সম্ভব নয়?",
-        islamistAnswer: "no" // Hardline Islamists may accept violence for Islamic governance
-      },
-      {
-        text: "৯/১১ এর হামলাগুলো কি ইসলামের দৃষ্টিতে ভুল বা নিষিদ্ধ ছিলো?",
-        islamistAnswer: "no" // Islamists might not condemn 9/11 as un-Islamic
-      },
-      {
-        text: "ইসলাম কি আধুনিক মূল্যবোধের সাথে সামঞ্জস্য করতে সংযোজন-বিয়োজন বা সংস্কার করা যেতে পারে?",
-        islamistAnswer: "no" // Islamists often reject reforming Islam to fit modern values
-      },
-      {
-        text: "আপনি কি ইসলামের ব্যাপারে অনমনীয় ও শরিয়তের প্রতিটি বিষয় সন্দেহাতীতভাবে বিশ্বাস করেন?",
-        islamistAnswer: "yes" // Islamists tend to support literal interpretations
-      }
-    ];
+            // Rights & Freedoms
+            {
+                text: "আপনি কি মনে করেন মুসলিম রাষ্ট্রে বসবাস করতে চাইলে সামর্থবান অমুসলিমদের জিযিয়াকর দিতে হবে?",
+                islamistAnswer: "yes" // Islamists often support different legal status for non-Muslims
+            },
+            {
+                text: "আইনি শাস্তি ছাড়া যেকারও ইসলাম ত্যাগ করার (মুরতাদ) স্বাধীনতা থাকা উচিত?",
+                islamistAnswer: "no" // Islamists often support punishments for apostasy
+            },
+            {
+                text: "ইসলাম ও রাসূল সাল্লাল্লাহু আলাইহি ওয়াসাল্লামের কটুক্তিকে বাক-স্বাধীনতা মনে করেন?",
+                islamistAnswer: "no" // Islamists often limit speech that criticizes Islam
+            },
+            {
+                text: "নারী ও পুরুষের কি জীবনের সব দিক থেকে সমান অধিকার থাকা উচিত? এমনকি সম্পদ বন্টন ও বিয়ের সংখ্যার ক্ষেত্রেও?",
+                islamistAnswer: "no" // Islamists often support different roles and rights
+            },
 
-    // Ideology labels and their descriptions
-    const ideologies = {
-  "secular": {
-    "name": "সেক্যুলার",
-    "description": "আপনি ধর্ম ও রাষ্ট্রের পৃথকীকরণের পক্ষে এবং ব্যক্তিগত স্বাধীনতাকে প্রাধান্য দেন। ইসলামিক মূল্যবোধ ও জীবনধারার ব্যাপারে পুনরায় চিন্তা করা এবং একজন বিজ্ঞ আলেমের পরামর্শ গ্রহণ করা আপনার জন্য উপকারী হতে পারে।"
-  },
-  "moderate": {
-    "name": "মোডারেট মুসলিম",
-    "description": "আপনি ঐতিহ্যবাহী ইসলামি মূল্যবোধ ও আধুনিক চিন্তার মধ্যে ভারসাম্য খুঁজছেন এবং সামাজিক ও রাজনৈতিক বিষয়ে মধ্যপন্থা অনুসরণ করেন। ইসলাম আপনার কাছে গুরুত্বপূর্ণ, এবং আপনি এর নমনীয়তা ও প্রাসঙ্গিক প্রয়োগে বিশ্বাসী।"
-  },
-  "conservative": {
-    "name": "রক্ষণশীল ঐতিহ্যবাহী মুসলিম",
-    "description": "আপনি ব্যক্তিগত ও সামাজিক জীবনে ইসলামি শিক্ষার ঐতিহ্যবাহী দৃষ্টিভঙ্গিকে অনুসরণ করেন। ইসলামি পরিচয় ও অনুশীলনকে মূল্যবান মনে করলেও, ইসলামি রাষ্ট্র প্রতিষ্ঠার ব্যাপারে আপনার দৃষ্টিভঙ্গি নমনীয় হতে পারে।"
-  },
-  "islamist": {
-    "name": "ইসলামিষ্ট",
-    "description": "আপনি বিশ্বাস করেন যে ইসলামি আইন ও নীতিগুলো সমাজ ও রাষ্ট্র পরিচালনার ক্ষেত্রে গুরুত্বপূর্ণ ভূমিকা পালন করা উচিত। ইসলামকে সমাজ সংগঠনের একটি পূর্ণাঙ্গ ব্যবস্থা হিসেবে দেখেন এবং ইসলামি শাসনব্যবস্থার পক্ষে সমর্থন প্রকাশ করেন।"
-  },
-  "fundamentalist": {
-    "name": "মৌলবাদী",
-    "description": "আপনি ইসলামের মূল শিক্ষা ও প্রচলিত ব্যাখ্যার প্রতি কঠোরভাবে অনুগত। আপনার দৃষ্টিতে ইসলামের শুদ্ধ রূপের অনুসরণ গুরুত্বপূর্ণ এবং আপনি আধুনিক সমাজের কিছু দিককে ইসলামের মৌলিক মূল্যবোধের সঙ্গে অসামঞ্জস্যপূর্ণ মনে করতে পারেন।"
-  }
-}
-;
+            // Social Issues
+            {
+                text: "মুসলিমদের কি পাশ্চাত্য সমাজে সম্পূর্ণরূপে একীভূত হওয়া উচিত?",
+                islamistAnswer: "no" // Islamists often oppose full integration
+            },
+            {
+                text: "মিউজিক, গান-বাজনা, বাদ্যযন্ত্র কি ইসলামে অনুমোদিত?",
+                islamistAnswer: "no" // Strict Islamists often oppose many forms of entertainment
+            },
+            {
+                text: "প্রচলিত ব্যাংকিং ব্যবস্থার বিকল্প হিসেবে ইসলামি ব্যাংকিং এর প্রচলন করা উচিত?",
+                islamistAnswer: "yes" // Islamists support Islamic banking
+            },
+            {
+                text: "মুসলিম দেশগুলোতে নারীদের কি আইন অনুসারে শালীন পোষাক পরা আবশ্যক করা উচিত?",
+                islamistAnswer: "yes" // Islamists often support mandatory hijab
+            },
 
-    function IslamicIdeologyCalculator() {
-      const [responses, setResponses] = useState(() => {
-        const saved = localStorage.getItem("ideologyResponses");
-        return saved ? JSON.parse(saved) : {};
-      });
-      
-      const [questionOrder, setQuestionOrder] = useState(() => {
-        const savedOrder = localStorage.getItem("questionOrder");
-        if (savedOrder) {
-          return JSON.parse(savedOrder);
+            // Contemporary Politics
+            {
+                text: "তালিবানের আফগানিস্তান শাসন কি একটি বৈধ ইসলামি রাষ্ট্র?",
+                islamistAnswer: "yes" // Islamists more likely to view Taliban as legitimate
+            },
+            {
+                text: "আপনি কি বিশ্বাস করেন যে ফিলিস্তিনিদের ইসরাইলের বিরুদ্ধে সশস্ত্র প্রতিরোধের অধিকার আছে?",
+                islamistAnswer: "yes" // Islamists typically support armed resistance against Israel
+            },
+            {
+                text: "পাশ্চাত্য দেশগুলি বিশেষত অ্যামেরিকা কি ইসলামের সাথে যুদ্ধে রয়েছে?",
+                islamistAnswer: "yes" // Islamists often view West as at war with Islam
+            },
+            {
+                text: "বিশেষ কারণ ব্যতীত অমুসলিম দেশে স্থায়ীভাবে বসবাস করাকে হারাম মনে করেন?",
+                islamistAnswer: "yes" // Islamists support prioritizing Islamic law
+            },
+
+            // Historical & Theological
+            {
+                text: "আপনি কি মনে করেন ইসলামি শাসন প্রতিষ্ঠার জন্য বর্তমানে জিহাদে কৌশলগত সম্ভব নয়?",
+                islamistAnswer: "no" // Hardline Islamists may accept violence for Islamic governance
+            },
+            {
+                text: "৯/১১ এর হামলাগুলো কি ইসলামের দৃষ্টিতে ভুল বা নিষিদ্ধ ছিলো?",
+                islamistAnswer: "no" // Islamists might not condemn 9/11 as un-Islamic
+            },
+            {
+                text: "ইসলাম কি আধুনিক মূল্যবোধের সাথে সামঞ্জস্য করতে সংযোজন-বিয়োজন বা সংস্কার করা যেতে পারে?",
+                islamistAnswer: "no" // Islamists often reject reforming Islam to fit modern values
+            },
+            {
+                text: "আপনি কি ইসলামের ব্যাপারে অনমনীয় ও শরিয়তের প্রতিটি বিষয় সন্দেহাতীতভাবে বিশ্বাস করেন?",
+                islamistAnswer: "yes" // Islamists tend to support literal interpretations
+            }
+        ];
+
+        // Ideology labels and their descriptions
+        const ideologies = {
+            "secular": {
+                "name": "সেক্যুলার",
+                "description": "আপনি ধর্ম ও রাষ্ট্রের পৃথকীকরণের পক্ষে এবং ব্যক্তিগত স্বাধীনতাকে প্রাধান্য দেন। ইসলামিক মূল্যবোধ ও জীবনধারার ব্যাপারে পুনরায় চিন্তা করা এবং একজন বিজ্ঞ আলেমের পরামর্শ গ্রহণ করা আপনার জন্য উপকারী হতে পারে।"
+            },
+            "moderate": {
+                "name": "মোডারেট মুসলিম",
+                "description": "আপনি ঐতিহ্যবাহী ইসলামি মূল্যবোধ ও আধুনিক চিন্তার মধ্যে ভারসাম্য খুঁজছেন এবং সামাজিক ও রাজনৈতিক বিষয়ে মধ্যপন্থা অনুসরণ করেন। ইসলাম আপনার কাছে গুরুত্বপূর্ণ, এবং আপনি এর নমনীয়তা ও প্রাসঙ্গিক প্রয়োগে বিশ্বাসী।"
+            },
+            "conservative": {
+                "name": "রক্ষণশীল ঐতিহ্যবাহী মুসলিম",
+                "description": "আপনি ব্যক্তিগত ও সামাজিক জীবনে ইসলামি শিক্ষার ঐতিহ্যবাহী দৃষ্টিভঙ্গিকে অনুসরণ করেন। ইসলামি পরিচয় ও অনুশীলনকে মূল্যবান মনে করলেও, ইসলামি রাষ্ট্র প্রতিষ্ঠার ব্যাপারে আপনার দৃষ্টিভঙ্গি নমনীয় হতে পারে।"
+            },
+            "islamist": {
+                "name": "ইসলামিষ্ট",
+                "description": "আপনি বিশ্বাস করেন যে ইসলামি আইন ও নীতিগুলো সমাজ ও রাষ্ট্র পরিচালনার ক্ষেত্রে গুরুত্বপূর্ণ ভূমিকা পালন করা উচিত। ইসলামকে সমাজ সংগঠনের একটি পূর্ণাঙ্গ ব্যবস্থা হিসেবে দেখেন এবং ইসলামি শাসনব্যবস্থার পক্ষে সমর্থন প্রকাশ করেন।"
+            },
+            "fundamentalist": {
+                "name": "মৌলবাদী",
+                "description": "আপনি ইসলামের মূল শিক্ষা ও প্রচলিত ব্যাখ্যার প্রতি কঠোরভাবে অনুগত। আপনার দৃষ্টিতে ইসলামের শুদ্ধ রূপের অনুসরণ গুরুত্বপূর্ণ এবং আপনি আধুনিক সমাজের কিছু দিককে ইসলামের মৌলিক মূল্যবোধের সঙ্গে অসামঞ্জস্যপূর্ণ মনে করতে পারেন।"
+            }
         }
-        return [...Array(questions.length).keys()].sort(() => Math.random() - 0.5);
-      });
-      
-      const [currentQuestion, setCurrentQuestion] = useState(0);
-      const [submitted, setSubmitted] = useState(false);
-      const [showDetails, setShowDetails] = useState(false);
-      const resultRef = useRef(null);
+            ;
 
-      useEffect(() => {
-        localStorage.setItem("ideologyResponses", JSON.stringify(responses));
-        localStorage.setItem("questionOrder", JSON.stringify(questionOrder));
-      }, [responses, questionOrder]);
+        function IslamicIdeologyCalculator () {
+            const [responses, setResponses] = useState(() => {
+                const saved = localStorage.getItem("ideologyResponses");
+                return saved ? JSON.parse(saved) : {};
+            });
 
-      const handleAnswer = (value) => {
-        setResponses({ ...responses, [questionOrder[currentQuestion]]: value });
-        if (currentQuestion < questions.length - 1) {
-          setCurrentQuestion(currentQuestion + 1);
-        } else {
-          setSubmitted(true);
-        }
-      };
+            const [questionOrder, setQuestionOrder] = useState(() => {
+                const savedOrder = localStorage.getItem("questionOrder");
+                if (savedOrder) {
+                    return JSON.parse(savedOrder);
+                }
+                return [...Array(questions.length).keys()].sort(() => Math.random() - 0.5);
+            });
 
-      const goToPreviousQuestion = () => {
-        if (currentQuestion > 0) {
-          setCurrentQuestion(currentQuestion - 1);
-        }
-      };
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [submitted, setSubmitted] = useState(false);
+            const [showDetails, setShowDetails] = useState(false);
+            const resultRef = useRef(null);
 
-      const goToNextQuestion = () => {
-        if (currentQuestion < questions.length - 1 && responses[questionOrder[currentQuestion]] !== undefined) {
-          setCurrentQuestion(currentQuestion + 1);
-        }
-      };
+            useEffect(() => {
+                localStorage.setItem("ideologyResponses", JSON.stringify(responses));
+                localStorage.setItem("questionOrder", JSON.stringify(questionOrder));
+            }, [responses, questionOrder]);
 
-      const restartSurvey = () => {
-        setResponses({});
-        setQuestionOrder([...Array(questions.length).keys()].sort(() => Math.random() - 0.5));
-        setCurrentQuestion(0);
-        setSubmitted(false);
-        setShowDetails(false);
-      };
+            const handleAnswer = (value) => {
+                setResponses({ ...responses, [questionOrder[currentQuestion]]: value });
+                if (currentQuestion < questions.length - 1) {
+                    setCurrentQuestion(currentQuestion + 1);
+                } else {
+                    setSubmitted(true);
+                }
+            };
 
-      const toggleDetails = () => {
-        setShowDetails(!showDetails);
-      };
+            const goToPreviousQuestion = () => {
+                if (currentQuestion > 0) {
+                    setCurrentQuestion(currentQuestion - 1);
+                }
+            };
 
-      const downloadResultAsImage = () => {
-        if (!resultRef.current) return;
-        
-        // Better configuration for html2canvas
-        const options = {
-          scale: 2, // Higher scale for better quality
-          backgroundColor: "#f3f4f6", // Match the background color
-          logging: false,
-          useCORS: true,
-          allowTaint: true
-        };
-        
-        html2canvas(resultRef.current, options).then(canvas => {
-          const imgData = canvas.toDataURL('image/png');
-          const link = document.createElement('a');
-          link.download = 'islamic-ideology-result.png';
-          link.href = imgData;
-          link.click();
-        });
-      };
+            const goToNextQuestion = () => {
+                if (currentQuestion < questions.length - 1 && responses[questionOrder[currentQuestion]] !== undefined) {
+                    setCurrentQuestion(currentQuestion + 1);
+                }
+            };
 
-      const shareToFacebook = () => {
-  const url = 'https://islamist.minbars.net';
-  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-  window.open(shareUrl, '_blank', 'width=600,height=400');
-};
+            const restartSurvey = () => {
+                setResponses({});
+                setQuestionOrder([...Array(questions.length).keys()].sort(() => Math.random() - 0.5));
+                setCurrentQuestion(0);
+                setSubmitted(false);
+                setShowDetails(false);
+            };
 
-      // Calculate scores based on correctly aligned answers
-      const calculateIslamistScore = () => {
-        let islamistPoints = 0;
-        let totalAnswered = 0;
-        
-        for (const qIndex in responses) {
-          const questionIslamistAnswer = questions[qIndex].islamistAnswer;
-          const userAnswer = responses[qIndex];
-          
-          // If user's answer matches the Islamist position, add a point
-          if (userAnswer === questionIslamistAnswer) {
-            islamistPoints++;
-          }
-          totalAnswered++;
-        }
-        
-        // Calculate percentage of Islamist-aligned answers
-        return totalAnswered > 0 ? Math.round((islamistPoints / totalAnswered) * 100) : 0;
-      };
-      
-      const totalQuestions = questions.length;
-      const answeredQuestions = Object.keys(responses).length;
-      const islamistPercentage = submitted ? calculateIslamistScore() : 0;
-      const moderatePercentage = 100 - islamistPercentage;
-      
-      // Determine ideology based on score
-      const determineIdeology = () => {
-        if (islamistPercentage >= 80) return ideologies.fundamentalist;
-        if (islamistPercentage >= 60) return ideologies.islamist;
-        if (islamistPercentage >= 40) return ideologies.conservative;
-        if (islamistPercentage >= 20) return ideologies.moderate;
-        return ideologies.secular;
-      };
-      
-      const primaryIdeology = submitted ? determineIdeology() : null;
+            const toggleDetails = () => {
+                setShowDetails(!showDetails);
+            };
 
-      const currentDate = new Date().toLocaleDateString('bn-BD', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
+            const downloadResultAsImage = () => {
+                if (!resultRef.current) return;
 
-      return (
-        <div className="max-w-2xl mx-auto p-8 bg-white shadow-2xl rounded-xl text-center space-y-6 font-sans">
-          <h1 className="text-3xl font-extrabold text-gray-900">ইসলামিষ্ট ক্যালকুলেটর</h1>
-          <p className="text-gray-600">ইসলামিক রাজনৈতিক ও সামাজিক চিন্তাধারার স্পেকট্রামে আপনি কোথায় আছেন তা জানুন।</p>
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 text-xs text-yellow-700">
-            <p>ইসলাম ও রাজনীতি সংক্রান্ত জটিল বিষয়গুলি আপনার ব্যক্তিগত দৃষ্টিকোণের ভিত্তিতে উত্তর দিন।</p>
-          </div>
-          
-          {!submitted ? (
-            <div className="space-y-8">
-              <div className="bg-gray-100 p-6 rounded-lg shadow-inner">
-                <p className="text-lg font-semibold text-gray-700">প্রশ্ন {currentQuestion + 1} / {questions.length}</p>
-                <div className="w-full bg-gray-300 h-2 rounded-full overflow-hidden my-4">
-                  <div
-                    className="bg-orange-500 h-2 transition-all"
-                    style={{ width: `${((currentQuestion + 1) / totalQuestions) * 100}%` }}
-                  ></div>
-                </div>
-                <p className="text-xl font-medium text-gray-900 my-6">{questions[questionOrder[currentQuestion]].text}</p>
-                <div className="flex justify-center gap-6">
-                  <button
-                    onClick={() => handleAnswer("yes")}
-                    className="px-8 py-3 bg-orange-500 text-white font-semibold rounded-full shadow-md hover:bg-orange-600 transition-all"
-                  >
-                    হ্যাঁ
-                  </button>
-                  <button
-                    onClick={() => handleAnswer("no")}
-                    className="px-8 py-3 bg-black text-white font-semibold rounded-full shadow-md hover:bg-gray-800 transition-all"
-                  >
-                    না
-                  </button>
-                </div>
-                <div className="flex justify-between mt-8">
-                  <button
-                    onClick={goToPreviousQuestion}
-                    disabled={currentQuestion === 0}
-                    className={`flex items-center px-4 py-2 rounded-lg border shadow-sm ${
-                      currentQuestion === 0 
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200' 
-                      : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
-                    }`}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
-                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
-                      <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                    আগের প্রশ্ন
-                  </button>
-                  <button
-                    onClick={goToNextQuestion}
-                    disabled={currentQuestion === questions.length - 1 || responses[questionOrder[currentQuestion]] === undefined}
-                    className={`flex items-center px-4 py-2 rounded-lg border shadow-sm ${
-                      currentQuestion === questions.length - 1 || responses[questionOrder[currentQuestion]] === undefined
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200' 
-                      : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
-                    }`}
-                  >
-                    পরের প্রশ্ন
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
-                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
-                      <path d="M9 18l6-6-6-6"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-8">
-              <div className="result-container" ref={resultRef}>
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">আপনার মতাদর্শ প্রোফাইল</h2>
-                
-                <div className="ideology-box">
-                  <h3 className="text-xl font-bold text-gray-900">{primaryIdeology.name}</h3>
-                  <p className="text-gray-700 mt-2">{primaryIdeology.description}</p>
-                </div>
-                
-                <div className="space-y-6">
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <p className="font-medium text-gray-800">ইসলামিষ্ট দৃষ্টিভঙ্গি</p>
-                      <p className="font-bold text-gray-900">{islamistPercentage}%</p>
+                // Better configuration for html2canvas
+                const options = {
+                    scale: 2, // Higher scale for better quality
+                    backgroundColor: "#f3f4f6", // Match the background color
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                };
+
+                html2canvas(resultRef.current, options).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.download = 'islamic-ideology.png';
+                    link.href = imgData;
+                    link.click();
+                });
+            };
+
+            const shareToFacebook = () => {
+                const url = 'https://islamist.minbars.net';
+                const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            };
+
+            // Calculate scores based on correctly aligned answers
+            const calculateIslamistScore = () => {
+                let islamistPoints = 0;
+                let totalAnswered = 0;
+
+                for (const qIndex in responses) {
+                    const questionIslamistAnswer = questions[qIndex].islamistAnswer;
+                    const userAnswer = responses[qIndex];
+
+                    // If user's answer matches the Islamist position, add a point
+                    if (userAnswer === questionIslamistAnswer) {
+                        islamistPoints++;
+                    }
+                    totalAnswered++;
+                }
+
+                // Calculate percentage of Islamist-aligned answers
+                return totalAnswered > 0 ? Math.round((islamistPoints / totalAnswered) * 100) : 0;
+            };
+
+            const totalQuestions = questions.length;
+            const answeredQuestions = Object.keys(responses).length;
+            const islamistPercentage = submitted ? calculateIslamistScore() : 0;
+            const moderatePercentage = 100 - islamistPercentage;
+
+            // Determine ideology based on score
+            const determineIdeology = () => {
+                if (islamistPercentage >= 80) return ideologies.fundamentalist;
+                if (islamistPercentage >= 60) return ideologies.islamist;
+                if (islamistPercentage >= 40) return ideologies.conservative;
+                if (islamistPercentage >= 20) return ideologies.moderate;
+                return ideologies.secular;
+            };
+
+            const primaryIdeology = submitted ? determineIdeology() : null;
+
+            return (
+                <div className="max-w-2xl mx-auto p-8 bg-white shadow-2xl rounded-xl text-center space-y-6 font-sans">
+                    <h1 className="text-3xl font-extrabold text-gray-900">ইসলামিষ্ট ক্যালকুলেটর</h1>
+                    <p className="text-gray-600">ইসলামিক রাজনৈতিক ও সামাজিক চিন্তাধারার স্পেকট্রামে আপনি কোথায় আছেন তা জানুন।</p>
+                    <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 text-sm text-yellow-700">
+                        <p>ইসলাম ও রাজনীতি সংক্রান্ত জটিল বিষয়গুলি আপনার ব্যক্তিগত দৃষ্টিকোণের ভিত্তিতে উত্তর দিন।</p>
                     </div>
-                    <div className="progress-bar-bg">
-                      <div
-                        className="islamist-bar"
-                        style={{ width: `${islamistPercentage}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <p className="font-medium text-gray-800">সেক্যুলার দৃষ্টিভঙ্গি</p>
-                      <p className="font-bold text-orange-600">{moderatePercentage}%</p>
-                    </div>
-                    <div className="progress-bar-bg">
-                      <div
-                        className="moderate-bar"
-                        style={{ width: `${moderatePercentage}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="branding">
-                  <p className="text-sm mb-1">{currentDate}</p>
-                  <p className="text-sm">ইসলামিষ্ট ক্যালকুলেটর দেখতে ভিজিট করুন <a href="https://islamist.minbars.net" target="_blank">islamist.minbars.net</a></p>
-                </div>
-              </div>
-              
-              <div className="mt-8 flex justify-center gap-4">
-                <button
-                  onClick={toggleDetails}
-                  className="px-6 py-2 bg-orange-500 text-white rounded-full shadow-md hover:bg-orange-600 transition-all"
-                >
-                ডিটেইলস
-                </button>
-                <button
-                  onClick={restartSurvey}
-                  className="px-6 py-2 bg-black text-white rounded-full shadow-md hover:bg-gray-800 transition-all"
-                >
-                  রিস্টার্ট
-                </button>
-                <button
-                  onClick={downloadResultAsImage}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition-all flex items-center"
-                >
-                  <span className="mr-1">ডাউনলোড</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                </button>
 
-                <button
-  onClick={shareToFacebook}
-  className="px-6 py-2 bg-blue-800 text-white rounded-full shadow-md hover:bg-blue-900 transition-all flex items-center"
->
-  <span className="mr-1">শেয়ার</span>
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-  </svg>
-</button>
-              </div>
-              
-              {showDetails && (
-                <div className="bg-gray-100 p-6 rounded-lg shadow-inner mt-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">আপনার উত্তরসমূহ</h3>
-                  <div className="space-y-4">
-                    {questionOrder.map((qIndex) => (
-                      responses[qIndex] !== undefined && (
-                        <div key={qIndex} className="flex items-start gap-4 text-left p-3 bg-white rounded shadow">
-                          <div className={`rounded-full w-8 h-8 flex items-center justify-center ${
-                            responses[qIndex] === "yes" ? "bg-orange-500 text-white" : "bg-black text-white"
-                          }`}>
-                            {responses[qIndex] === "yes" ? "হ্যাঁ" : "না"}
-                          </div>
-                          <div>
-                            <p className="font-medium">{questions[qIndex].text}</p>
-                            <p className="text-sm text-gray-600">
-                              আপনার উত্তর: <span className="font-semibold">{responses[qIndex] === "yes" ? "হ্যাঁ" : "না"}</span>
-                              {responses[qIndex] === questions[qIndex].islamistAnswer && (
-                                <span className="ml-2 text-xs px-2 py-1 bg-black text-white rounded-full">ইসলামিষ্ট দৃষ্টিকোণ</span>
-                              )}
-                            </p>
-                          </div>
+                    {!submitted ? (
+                        <div className="space-y-8">
+                            <div className="bg-gray-100 p-6 rounded-lg shadow-inner">
+                                <p className="text-lg font-semibold text-gray-700">প্রশ্ন {currentQuestion + 1} / {questions.length}</p>
+                                <div className="w-full bg-gray-300 h-2 rounded-full overflow-hidden my-4">
+                                    <div
+                                        className="bg-orange-500 h-2 transition-all"
+                                        style={{ width: `${((currentQuestion + 1) / totalQuestions) * 100}%` }}
+                                    ></div>
+                                </div>
+                                <p className="text-xl font-medium text-gray-900 my-6">{questions[questionOrder[currentQuestion]].text}</p>
+                                <div className="flex justify-center gap-6">
+                                    <button
+                                        onClick={() => handleAnswer("yes")}
+                                        className="px-8 py-3 bg-orange-500 text-white font-semibold rounded-full shadow-md hover:bg-orange-600 transition-all"
+                                    >
+                                        হ্যাঁ
+                                    </button>
+                                    <button
+                                        onClick={() => handleAnswer("no")}
+                                        className="px-8 py-3 bg-black text-white font-semibold rounded-full shadow-md hover:bg-gray-800 transition-all"
+                                    >
+                                        না
+                                    </button>
+                                </div>
+                                <div className="flex justify-between mt-8">
+                                    <button
+                                        onClick={goToPreviousQuestion}
+                                        disabled={currentQuestion === 0}
+                                        className={`flex items-center px-4 py-2 rounded-lg border shadow-sm ${currentQuestion === 0
+                                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
+                                                : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
+                                            }`}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                                            <path d="M15 18l-6-6 6-6" />
+                                        </svg>
+                                        আগের প্রশ্ন
+                                    </button>
+                                    <button
+                                        onClick={goToNextQuestion}
+                                        disabled={currentQuestion === questions.length - 1 || responses[questionOrder[currentQuestion]] === undefined}
+                                        className={`flex items-center px-4 py-2 rounded-lg border shadow-sm ${currentQuestion === questions.length - 1 || responses[questionOrder[currentQuestion]] === undefined
+                                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
+                                                : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
+                                            }`}
+                                    >
+                                        পরের প্রশ্ন
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
+                                            <path d="M9 18l6-6-6-6" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                      )
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              <div className="text-center text-gray-600 mt-8">
-                <a href="https://islamist.minbars.net" target="_blank" className="text-orange-500 hover:text-orange-600 font-semibold">islamist.minbars.net</a> | Ummah Labs
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
+                    ) : (
+                        <div className="space-y-8">
+                            <div className="result-container" ref={resultRef}>
+                                <div className="ideology-box">
+                                    <h3 className="text-xl font-bold text-gray-900">আপনি {primaryIdeology.name}</h3>
+                                    <p className="text-gray-700 mt-2">{primaryIdeology.description}</p>
+                                </div>
 
-    ReactDOM.render(<IslamicIdeologyCalculator />, document.getElementById('root'));
-  </script>
+                                <div className="space-y-6">
+                                    <div>
+                                        <div className="flex justify-between mb-1">
+                                            <p className="font-medium text-gray-800">ইসলামিষ্ট দৃষ্টিভঙ্গি</p>
+                                            <p className="font-bold text-gray-900">{islamistPercentage}%</p>
+                                        </div>
+                                        <div className="progress-bar-bg">
+                                            <div
+                                                className="islamist-bar"
+                                                style={{ width: `${islamistPercentage}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between mb-1">
+                                            <p className="font-medium text-gray-800">সেক্যুলার দৃষ্টিভঙ্গি</p>
+                                            <p className="font-bold text-orange-600">{moderatePercentage}%</p>
+                                        </div>
+                                        <div className="progress-bar-bg">
+                                            <div
+                                                className="moderate-bar"
+                                                style={{ width: `${moderatePercentage}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="branding">
+                                    <p className="text-sm"><a href="https://islamist.minbars.net" target="_blank">islamist.minbars.net</a></p>
+                                </div>
+                            </div>
+
+                            <div className="mt-8 flex justify-center gap-4 flex-wrap">
+                                <button
+                                    onClick={toggleDetails}
+                                    className="px-6 py-2 bg-orange-500 text-white rounded-full shadow-md hover:bg-orange-600 transition-all"
+                                >
+                                    ডিটেইলস
+                                </button>
+                                <button
+                                    onClick={restartSurvey}
+                                    className="px-6 py-2 bg-black text-white rounded-full shadow-md hover:bg-gray-800 transition-all"
+                                >
+                                    আবার শুরু
+                                </button>
+                                <button
+                                    onClick={downloadResultAsImage}
+                                    className="px-6 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition-all flex items-center"
+                                >
+                                    <span className="mr-1">ডাউনলোড</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                </button>
+
+                                <button
+                                    onClick={shareToFacebook}
+                                    className="px-6 py-2 bg-blue-800 text-white rounded-full shadow-md hover:bg-blue-900 transition-all flex items-center"
+                                >
+                                    <span className="mr-1">শেয়ার</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            {showDetails && (
+                                <div className="bg-gray-100 p-6 rounded-lg shadow-inner mt-6">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">আপনার উত্তরসমূহ</h3>
+                                    <div className="space-y-4">
+                                        {questionOrder.map((qIndex) => (
+                                            responses[qIndex] !== undefined && (
+                                                <div key={qIndex} className="flex items-start gap-4 text-left p-3 bg-white rounded shadow">
+                                                    <div className={`rounded-full w-8 h-8 flex items-center justify-center ${responses[qIndex] === "yes" ? "bg-orange-500 text-white" : "bg-black text-white"
+                                                        }`}>
+                                                        {responses[qIndex] === "yes" ? "হ্যাঁ" : "না"}
+                                                    </div>
+                                                    <div>
+                                                        <p className="font-medium">{questions[qIndex].text}</p>
+                                                        <p className="text-sm text-gray-600">
+                                                            আপনার উত্তর: <span className="font-semibold">{responses[qIndex] === "yes" ? "হ্যাঁ" : "না"}</span>
+                                                            {responses[qIndex] === questions[qIndex].islamistAnswer && (
+                                                                <span className="ml-2 text-xs px-2 py-1 bg-black text-white rounded-full">ইসলামিষ্ট দৃষ্টিকোণ</span>
+                                                            )}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            )
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="text-center text-gray-600 mt-8">
+                                <a href="https://islamist.minbars.net" target="_blank" className="text-orange-500 hover:text-orange-600 font-semibold">islamist.minbars.net</a> | Ummah Labs
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<IslamicIdeologyCalculator />, document.getElementById('root'));
+    </script>
 </body>
+
 </html>
