@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Islamic Ideology Calculator</title>
+  <title>ইসলামিষ্ট ক্যালকুলেটর</title>
   <!-- React CDN -->
   <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
@@ -15,6 +15,12 @@
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
   <link href="https://fonts.maateen.me/charukola-ultra-light/font.css" rel="stylesheet">
+
+  <meta property="og:title" content="ইসলামিষ্ট ক্যালকুলেটর" />
+<meta property="og:description" content="ইসলামিক রাজনৈতিক ও সামাজিক চিন্তাধারার স্পেকট্রামে আপনি কোথায় আছেন তা জানুন।" />
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/The_Kaaba_during_Hajj.jpg/275px-The_Kaaba_during_Hajj.jpg" />
+<meta property="og:url" content="https://islamist.minbars.net" />
+<meta property="og:type" content="website" />
 
   <style>
     
@@ -79,7 +85,7 @@
     const questions = [
       // Governance & Law
       {
-        text: "দেশ কি ধর্মনিরপেক্ষ আইন দ্বারা শাসিত হওয়া উচিত শরিয়া আইনের পরিবর্তে?",
+        text: "শরিয়া আইনের পরিবর্তে দেশ কি সেক্যুলার আইন দ্বারা শাসিত হওয়া উচিত বলে মনে করেন?",
         islamistAnswer: "no" // "no" means Islamist position is against secular law
       },
       {
@@ -91,25 +97,25 @@
         islamistAnswer: "yes" // Islamists support global caliphate
       },
       {
-        text: "ধর্মীয় পণ্ডিতদের (উলামা) কি আইন প্রণয়নে ভেটো ক্ষমতা থাকা উচিত?",
-        islamistAnswer: "yes" // Islamists support religious authority over legislation
+        text: "আপনি কি মনে করেন ধর্ম এবং রাষ্ট্র আলাদা বিষয় এবং একটির সাথে আরেকটি মেলানো উচিৎ নয়?",
+        islamistAnswer: "no" // Islamists support religious authority over legislation
       },
       
       // Rights & Freedoms
       {
-        text: "ধর্মীয় সংখ্যালঘুদের কি মুসলিমদের মতো সমান আইনি অধিকার থাকা উচিত?",
-        islamistAnswer: "no" // Islamists often support different legal status for non-Muslims
+        text: "আপনি কি মনে করেন মুসলিম রাষ্ট্রে বসবাস করতে চাইলে সামর্থবান অমুসলিমদের জিযিয়াকর দিতে হবে?",
+        islamistAnswer: "yes" // Islamists often support different legal status for non-Muslims
       },
       {
-        text: "মুসলিমরা কি আইনি শাস্তি ছাড়া ইসলাম ত্যাগ করতে স্বাধীন হওয়া উচিত?",
+        text: "আইনি শাস্তি ছাড়া যেকারও ইসলাম ত্যাগ করার (মুরতাদ) স্বাধীনতা থাকা উচিত?",
         islamistAnswer: "no" // Islamists often support punishments for apostasy
       },
       {
-        text: "আপনি কি বাক্ স্বাধীনতা সমর্থন করেন, এমনকি যদি তা ইসলামের সমালোচনা অন্তর্ভুক্ত করে?",
+        text: "ইসলাম ও রাসূল সাল্লাল্লাহু আলাইহি ওয়াসাল্লামের কটুক্তিকে বাক-স্বাধীনতা মনে করেন?",
         islamistAnswer: "no" // Islamists often limit speech that criticizes Islam
       },
       {
-        text: "নারী ও পুরুষের কি জীবনের সব দিক থেকে সমান অধিকার থাকা উচিত?",
+        text: "নারী ও পুরুষের কি জীবনের সব দিক থেকে সমান অধিকার থাকা উচিত? এমনকি সম্পদ বন্টন ও বিয়ের সংখ্যার ক্ষেত্রেও?",
         islamistAnswer: "no" // Islamists often support different roles and rights
       },
       
@@ -119,21 +125,21 @@
         islamistAnswer: "no" // Islamists often oppose full integration
       },
       {
-        text: "সঙ্গীত এবং বিনোদনের বেশিরভাগ রূপ কি ইসলামে অনুমোদিত?",
+        text: "মিউজিক, গান-বাজনা, বাদ্যযন্ত্র কি ইসলামে অনুমোদিত?",
         islamistAnswer: "no" // Strict Islamists often oppose many forms of entertainment
       },
       {
-        text: "ইসলামি ব্যাংকিং কি প্রচলিত ব্যাংকিং ব্যবস্থার স্থান নেওয়া উচিত?",
+        text: "প্রচলিত ব্যাংকিং ব্যবস্থার বিকল্প হিসেবে ইসলামি ব্যাংকিং এর প্রচলন করা উচিত?",
         islamistAnswer: "yes" // Islamists support Islamic banking
       },
       {
-        text: "মুসলিম দেশগুলোতে নারীদের কি আইন অনুসারে হিজাব পরা আবশ্যক করা উচিত?",
+        text: "মুসলিম দেশগুলোতে নারীদের কি আইন অনুসারে শালীন পোষাক পরা আবশ্যক করা উচিত?",
         islamistAnswer: "yes" // Islamists often support mandatory hijab
       },
       
       // Contemporary Politics
       {
-        text: "তালিবানের আফগানিস্তান শাসন কি একটি বৈধ ইসলামি রাষ্ট্র ছিল?",
+        text: "তালিবানের আফগানিস্তান শাসন কি একটি বৈধ ইসলামি রাষ্ট্র?",
         islamistAnswer: "yes" // Islamists more likely to view Taliban as legitimate
       },
       {
@@ -141,56 +147,57 @@
         islamistAnswer: "yes" // Islamists typically support armed resistance against Israel
       },
       {
-        text: "পাশ্চাত্য দেশগুলি কি মূলত ইসলামের সাথে যুদ্ধে রয়েছে?",
+        text: "পাশ্চাত্য দেশগুলি বিশেষত অ্যামেরিকা কি ইসলামের সাথে যুদ্ধে রয়েছে?",
         islamistAnswer: "yes" // Islamists often view West as at war with Islam
       },
       {
-        text: "পশ্চিমে বসবাসকারী মুসলিমদের কি ধর্মনিরপেক্ষ আইনের চেয়ে ইসলামি আইনকে অগ্রাধিকার দেওয়া উচিত?",
+        text: "বিশেষ কারণ ব্যতীত অমুসলিম দেশে স্থায়ীভাবে বসবাস করাকে হারাম মনে করেন?",
         islamistAnswer: "yes" // Islamists support prioritizing Islamic law
       },
       
       // Historical & Theological
       {
-        text: "আপনি কি ইসলামি শাসন প্রতিষ্ঠার জন্য সহিংসতার ব্যবহার প্রত্যাখ্যান করেন?",
+        text: "আপনি কি মনে করেন ইসলামি শাসন প্রতিষ্ঠার জন্য বর্তমানে জিহাদে কৌশলগত সম্ভব নয়?",
         islamistAnswer: "no" // Hardline Islamists may accept violence for Islamic governance
       },
       {
-        text: "৯/১১ এর হামলাগুলো কি ইসলামি শিক্ষার বিপরীত ছিল?",
+        text: "৯/১১ এর হামলাগুলো কি ইসলামের দৃষ্টিতে ভুল বা নিষিদ্ধ ছিলো?",
         islamistAnswer: "no" // Islamists might not condemn 9/11 as un-Islamic
       },
       {
-        text: "ইসলাম কি আধুনিক মূল্যবোধের সাথে সামঞ্জস্য করতে সংস্কার করা যেতে পারে?",
+        text: "ইসলাম কি আধুনিক মূল্যবোধের সাথে সামঞ্জস্য করতে সংযোজন-বিয়োজন বা সংস্কার করা যেতে পারে?",
         islamistAnswer: "no" // Islamists often reject reforming Islam to fit modern values
       },
       {
-        text: "আপনি কি ইসলামি পাঠ্যের কঠোর, আক্ষরিক ব্যাখ্যায় বিশ্বাস করেন?",
+        text: "আপনি কি ইসলামের ব্যাপারে অনমনীয় ও শরিয়তের প্রতিটি বিষয় সন্দেহাতীতভাবে বিশ্বাস করেন?",
         islamistAnswer: "yes" // Islamists tend to support literal interpretations
       }
     ];
 
     // Ideology labels and their descriptions
     const ideologies = {
-      secular: {
-        name: "ধর্মনিরপেক্ষ/প্রগতিশীল মুসলিম",
-        description: "আপনি ধর্ম ও শাসনের মধ্যে পৃথকীকরণের সমর্থন করেন, ব্যক্তিগত স্বাধীনতা এবং ইসলামি শিক্ষার আধুনিক ব্যাখ্যার উপর জোর দেন। আপনি সম্ভবত সংস্কার এবং সমসাময়িক প্রেক্ষাপটে ইসলামি অনুশীলনগুলির অভিযোজনকে পছন্দ করেন।"
-      },
-      moderate: {
-        name: "মধ্যপন্থী মুসলিম",
-        description: "আপনি ঐতিহ্যবাহী ইসলামি মূল্যবোধ এবং আধুনিক বিবেচনার মধ্যে ভারসাম্য খুঁজছেন, সামাজিক ও রাজনৈতিক বিষয়গুলিতে মধ্যপন্থা খুঁজছেন। যদিও ধর্ম আপনার কাছে গুরুত্বপূর্ণ, আপনি ইসলামি নীতিগুলির নমনীয়তা এবং প্রাসঙ্গিক প্রয়োগে বিশ্বাস করেন।"
-      },
-      conservative: {
-        name: "রক্ষণশীল ঐতিহ্যবাহী মুসলিম",
-        description: "আপনি ব্যক্তিগত ও সামাজিক জীবনে ইসলামি শিক্ষার ঐতিহ্যবাহী ব্যাখ্যাকে পছন্দ করেন। আপনি ইসলামি পরিচয় ও অনুশীলনকে মূল্যবান করেন, তবে অনিবার্যভাবে একটি ইসলামি রাষ্ট্রের পক্ষে সমর্থন নাও করতে পারেন।"
-      },
-      islamist: {
-        name: "রাজনৈতিক ইসলামপন্থী",
-        description: "আপনি বিশ্বাস করেন যে ইসলামি আইন ও নীতিগুলো সমাজ ও রাষ্ট্র শাসনের সমস্ত দিক নিয়ন্ত্রণ করা উচিত। আপনি সম্ভবত একটি ইসলামি রাজনৈতিক ব্যবস্থা প্রতিষ্ঠা সমর্থন করেন এবং ইসলামকে সমাজ সংগঠিত করার জন্য একটি ব্যাপক ব্যবস্থা হিসাবে দেখেন।"
-      },
-      fundamentalist: {
-        name: "ইসলামিক মৌলবাদী",
-        description: "আপনি ইসলামি পাঠ্যগুলির কঠোর, আক্ষরিক ব্যাখ্যা এবং ইসলামের আপনার দৃষ্টিতে বিশুদ্ধ রূপে ফিরে যাওয়ার পক্ষে ওকালতি করেন। আপনি সমসাময়িক অনেক আপোসকে বিশ্বাসের দুর্নীতি হিসাবে দেখতে পারেন এবং সম্ভবত ইসলামি শাসন প্রতিষ্ঠার জন্য আরও চরমপন্থী উপায়কে সমর্থন করতে পারেন।"
-      }
-    };
+  "secular": {
+    "name": "সেক্যুলার",
+    "description": "আপনি ধর্ম ও রাষ্ট্রের পৃথকীকরণের পক্ষে এবং ব্যক্তিগত স্বাধীনতাকে প্রাধান্য দেন। ইসলামিক মূল্যবোধ ও জীবনধারার ব্যাপারে পুনরায় চিন্তা করা এবং একজন বিজ্ঞ আলেমের পরামর্শ গ্রহণ করা আপনার জন্য উপকারী হতে পারে।"
+  },
+  "moderate": {
+    "name": "মোডারেট মুসলিম",
+    "description": "আপনি ঐতিহ্যবাহী ইসলামি মূল্যবোধ ও আধুনিক চিন্তার মধ্যে ভারসাম্য খুঁজছেন এবং সামাজিক ও রাজনৈতিক বিষয়ে মধ্যপন্থা অনুসরণ করেন। ইসলাম আপনার কাছে গুরুত্বপূর্ণ, এবং আপনি এর নমনীয়তা ও প্রাসঙ্গিক প্রয়োগে বিশ্বাসী।"
+  },
+  "conservative": {
+    "name": "রক্ষণশীল ঐতিহ্যবাহী মুসলিম",
+    "description": "আপনি ব্যক্তিগত ও সামাজিক জীবনে ইসলামি শিক্ষার ঐতিহ্যবাহী দৃষ্টিভঙ্গিকে অনুসরণ করেন। ইসলামি পরিচয় ও অনুশীলনকে মূল্যবান মনে করলেও, ইসলামি রাষ্ট্র প্রতিষ্ঠার ব্যাপারে আপনার দৃষ্টিভঙ্গি নমনীয় হতে পারে।"
+  },
+  "islamist": {
+    "name": "ইসলামিষ্ট",
+    "description": "আপনি বিশ্বাস করেন যে ইসলামি আইন ও নীতিগুলো সমাজ ও রাষ্ট্র পরিচালনার ক্ষেত্রে গুরুত্বপূর্ণ ভূমিকা পালন করা উচিত। ইসলামকে সমাজ সংগঠনের একটি পূর্ণাঙ্গ ব্যবস্থা হিসেবে দেখেন এবং ইসলামি শাসনব্যবস্থার পক্ষে সমর্থন প্রকাশ করেন।"
+  },
+  "fundamentalist": {
+    "name": "মৌলবাদী",
+    "description": "আপনি ইসলামের মূল শিক্ষা ও প্রচলিত ব্যাখ্যার প্রতি কঠোরভাবে অনুগত। আপনার দৃষ্টিতে ইসলামের শুদ্ধ রূপের অনুসরণ গুরুত্বপূর্ণ এবং আপনি আধুনিক সমাজের কিছু দিককে ইসলামের মৌলিক মূল্যবোধের সঙ্গে অসামঞ্জস্যপূর্ণ মনে করতে পারেন।"
+  }
+}
+;
 
     function IslamicIdeologyCalculator() {
       const [responses, setResponses] = useState(() => {
@@ -270,6 +277,12 @@
         });
       };
 
+      const shareToFacebook = () => {
+  const url = 'https://islamist.minbars.net';
+  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+  window.open(shareUrl, '_blank', 'width=600,height=400');
+};
+
       // Calculate scores based on correctly aligned answers
       const calculateIslamistScore = () => {
         let islamistPoints = 0;
@@ -314,10 +327,10 @@
 
       return (
         <div className="max-w-2xl mx-auto p-8 bg-white shadow-2xl rounded-xl text-center space-y-6 font-sans">
-          <h1 className="text-3xl font-extrabold text-gray-900">ইসলামিক মতাদর্শ ক্যালকুলেটর</h1>
+          <h1 className="text-3xl font-extrabold text-gray-900">ইসলামিষ্ট ক্যালকুলেটর</h1>
           <p className="text-gray-600">ইসলামিক রাজনৈতিক ও সামাজিক চিন্তাধারার স্পেকট্রামে আপনি কোথায় আছেন তা জানুন।</p>
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 text-sm text-yellow-700">
-            <p>এই কুইজটি ইসলাম ও রাজনীতি সংক্রান্ত জটিল বিষয়গুলি নিয়ে আলোচনা করে। আপনার ব্যক্তিগত দৃষ্টিকোণের ভিত্তিতে উত্তর দিন।</p>
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 text-xs text-yellow-700">
+            <p>ইসলাম ও রাজনীতি সংক্রান্ত জটিল বিষয়গুলি আপনার ব্যক্তিগত দৃষ্টিকোণের ভিত্তিতে উত্তর দিন।</p>
           </div>
           
           {!submitted ? (
@@ -392,7 +405,7 @@
                 <div className="space-y-6">
                   <div>
                     <div className="flex justify-between mb-1">
-                      <p className="font-medium text-gray-800">ইসলামপন্থী দৃষ্টিভঙ্গি</p>
+                      <p className="font-medium text-gray-800">ইসলামিষ্ট দৃষ্টিভঙ্গি</p>
                       <p className="font-bold text-gray-900">{islamistPercentage}%</p>
                     </div>
                     <div className="progress-bar-bg">
@@ -405,7 +418,7 @@
                   
                   <div>
                     <div className="flex justify-between mb-1">
-                      <p className="font-medium text-gray-800">মধ্যপন্থী/ধর্মনিরপেক্ষ দৃষ্টিভঙ্গি</p>
+                      <p className="font-medium text-gray-800">সেক্যুলার দৃষ্টিভঙ্গি</p>
                       <p className="font-bold text-orange-600">{moderatePercentage}%</p>
                     </div>
                     <div className="progress-bar-bg">
@@ -419,7 +432,7 @@
                 
                 <div className="branding">
                   <p className="text-sm mb-1">{currentDate}</p>
-                  <p className="text-sm">এই ক্যালকুলেটর দ্বারা উৎপন্ন। আরও জানতে ভিজিট করুন: <a href="https://islamic.net" target="_blank">islamic.net</a></p>
+                  <p className="text-sm">ইসলামিষ্ট ক্যালকুলেটর দেখতে ভিজিট করুন <a href="https://islamist.minbars.net" target="_blank">islamist.minbars.net</a></p>
                 </div>
               </div>
               
@@ -428,25 +441,35 @@
                   onClick={toggleDetails}
                   className="px-6 py-2 bg-orange-500 text-white rounded-full shadow-md hover:bg-orange-600 transition-all"
                 >
-                  {showDetails ? "বিবরণ লুকান" : "বিবরণ দেখুন"}
+                ডিটেইলস
                 </button>
                 <button
                   onClick={restartSurvey}
                   className="px-6 py-2 bg-black text-white rounded-full shadow-md hover:bg-gray-800 transition-all"
                 >
-                  আবার শুরু করুন
+                  রিস্টার্ট
                 </button>
                 <button
                   onClick={downloadResultAsImage}
                   className="px-6 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition-all flex items-center"
                 >
-                  <span className="mr-1">ফলাফল ডাউনলোড করুন</span>
+                  <span className="mr-1">ডাউনলোড</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
                     <polyline points="7 10 12 15 17 10"></polyline>
                     <line x1="12" y1="15" x2="12" y2="3"></line>
                   </svg>
                 </button>
+
+                <button
+  onClick={shareToFacebook}
+  className="px-6 py-2 bg-blue-800 text-white rounded-full shadow-md hover:bg-blue-900 transition-all flex items-center"
+>
+  <span className="mr-1">শেয়ার</span>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+  </svg>
+</button>
               </div>
               
               {showDetails && (
@@ -466,7 +489,7 @@
                             <p className="text-sm text-gray-600">
                               আপনার উত্তর: <span className="font-semibold">{responses[qIndex] === "yes" ? "হ্যাঁ" : "না"}</span>
                               {responses[qIndex] === questions[qIndex].islamistAnswer && (
-                                <span className="ml-2 text-xs px-2 py-1 bg-black text-white rounded-full">ইসলামপন্থী দৃষ্টিকোণ</span>
+                                <span className="ml-2 text-xs px-2 py-1 bg-black text-white rounded-full">ইসলামিষ্ট দৃষ্টিকোণ</span>
                               )}
                             </p>
                           </div>
@@ -478,7 +501,7 @@
               )}
               
               <div className="text-center text-gray-600 mt-8">
-                <a href="https://islamic.net" target="_blank" className="text-orange-500 hover:text-orange-600 font-semibold">islamic.net</a> | ইসলামী তথ্য, গবেষণা ও শিক্ষা
+                <a href="https://islamist.minbars.net" target="_blank" className="text-orange-500 hover:text-orange-600 font-semibold">islamist.minbars.net</a> | Ummah Labs
               </div>
             </div>
           )}
@@ -487,43 +510,6 @@
     }
 
     ReactDOM.render(<IslamicIdeologyCalculator />, document.getElementById('root'));
-  </script>
-<div class="my-image-container">
-    <img src="http://example.com/image.jpg">
-    <a href="#" class="fb-share-image">Share</a>');
-</div>
-  <script>
-    window.fbAsyncInit = function() {
-    FB.init({
-        appId            : 'YOUR APP ID',
-        status           : true,
-        cookie           : true,
-        version          : 'v2.10'                
-    });
-
-    $( '.fb-share-image' ).click(function(e){
-        e.preventDefault();
-        var image = $(this).siblings('img').attr('src');
-
-        FB.ui(
-                {
-                    method: 'share',
-                    href: $(location).attr('href') + '?og_img=' + image,
-                },
-                function (response) {
-
-                }
-            );
-    })
-};
-
-(function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
   </script>
 </body>
 </html>
